@@ -1,0 +1,160 @@
+---
+title: "Chapter 4 and 5 notes"
+author: "Anna Hedvig"
+date: "9/23/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Exploring data with graphs
+
+the role of the graph:
+  -Show the data
+  -induce the reader to think about the data being presneed (rather than some other aspect of the graph)
+  -Avoid distorting the data
+  -Present many numbers with minimum ink
+  -Make larger data sets coherent
+  -encourage the reader to compare different pieces of data
+  - reveal data
+
+Rules of thomb: x- and y-axis has informative labels, few distractions, and minimum ink, and using 2D-plots, and dont scale the y-axis to represent something false.
+
+```{r}
+installing ggplot2
+
+library(ggplot2)
+```
+
+##the anatomy of a plot
+the tree layers in the ggplot: each layer has a geometric element like bars, points, lines and text called a geom. the sizes and locations are determined by the aesthetic properties aes()
+
+```{r}
+Commonly used geoms:
+  geom_bar() --> a variable to plot on the x-axis, creates a layer with bars showing statistical properties
+  geom_point()--> layer showing the datapoints
+  geom_line()--> layer that connetcs datapoints with a straight line
+  geom_smooth() --> creates a layer with a smoother line...
+  geom_histogram() -->hisogram on it
+  goem_boxplot()--> box-whisker diagram
+  geom_text()--> creates a layer of text
+  geom_density() --> density plot
+  geom_errorbar() --> creates an errorbar displayed on it
+  geom_hline() -->user defined hori<ontal or vertical line, perspectivly
+  
+  in the () you type the aes() like x- and y-axis coordinates
+```
+
+##the anatomy of a ggplot() function
+
+general version of a graph
+```{r}
+myGraph<-ggplot(myData, aes(variable for x-axis, variable for y-axis))
+
+dataframe is myData. If one of the variables was gender, and we wanted that part coloured:
+
+myGraph<-ggplot(myData, aes(variable for x-axis, variable for y-axis, colour= gender))
+  
+Adding layers to the myGraph
+
+adding and poits (blue points): myGraph+geom_bar()+geom_point(colour="blue")
+
+adding labels: myGraph+geom_bar()+geom_point(colour="blue")+labels(x="text", y="text")
+
+wanting different types of variables (ex. ratings) to be different shapes:
+  graph+geom_point(aes(shape=special ting))
+```
+
+##stats and geoms
+the polits automatically calculates statistical properties when using geoms like geom_histogram() 
+they are called built-in stats in ggplot2
+ 
+see in p129 in the book
+
+##avoiding overplotting
+position="x", position adjustments
+    - dodge: no overlap in the objects at the side
+    - stack and fill: positions obetcs so they are stacked.
+    - identitiy: no position adjustment
+    - jitter: adds a random offset to objects so they dont overlap
+    
+Splitting a  plot into subgroups: producing a grid that splits the data displayed by the plot using facet_grid(), this is done by...? this is hard...
+
+##regression and scatterplots
+after plotting a scatterplot with the ex. myGraph+geom_point(), wanting to add a regression line, you add the geom geom_smooth(). the shaded part on the graph is the 95% confidence interval. if we want a straight line to represent the regression line, you add + geom_smooth(method ="lm") for linear model. if you want another colour: + geom_smooth(method ="lm", colour="red") 
+
+switching the confidence interval off --> adding se = F to the geom_smooth like: geom_smooth(method="lm", se = F)
+
+transparency and colour of confidence interval: geom_smooth(method="lm", alpha=0.1, fill="Blue")
+
+##Grouped scatterplots
+first seperating the groups in the scatterplot:
+example with exam anxiety
+
+```{r}
+scatter<-ffplot(myData, aes(x-axis,y-axis,colour=variable, ex. gender))
+
+after this we execute:
+
+scatter+geom_point()+geom_smooth(method="lm",aes(fill=Variable ex. gender), alpha=0.1)
+
+we fill, so the confidence intervals are calculated and shown in different colours
+
+after this labels can be added: +labels(x="title", y="title", colour= variable ex. gender)
+
+the title also differentiates in colour depending on the gender.
+opts
+  
+```
+ 
+##Histogams and problems with frequency distributions
+
+outliners: a score very different from the rest, it can bias the mean
+
+removing legend: +opts(legend.position="none"
+
+Boxplot and box-whisker diagrams. center of plot is the median, sorrounded by the 50% top and 50% bottom of the observations. example of boxplot:
+
+```{r}
+festivalData<-read.delim("/Users/bruger/Desktop/ExpMeth-1---Assignment-1/Data_ex/DownloadFestival.dat",header=TRUE)
+
+festivalHistogram<-ggplot(festivalData, aes(festivalData$day1))
+festivalHistogram+geom_histogram()
+
+```
+
+```{r}
+festivalHistogram+geom_histogram(binwidth = 0.4)+labs(x="Hygiene (day 1 of festival",y="Frequency")
+```
+
+Making a boxplot over genders:
+
+```{r}
+festivalBoxplot<-ggplot(festivalData, aes(gender, day1))
+  festivalBoxplot+geom_boxplot()+labs(x="Gender", y="Hygiene(Day 1 of festival")
+
+```
+
+Taking away the outliners for woman and men:
+
+```{r}
+
+```
+
+
+Density plots
+
+```{r}
+festivalData<-read.delim("/Users/bruger/Desktop/ExpMeth-1---Assignment-1/Data_ex/DownloadFestival(No Outlier).dat",header=TRUE)
+density<-ggplot(festivalData, aes(day1))
+density+geom_density()+labs(x="hygiene (day 1 of festival)", y= "Density Estimate")
+```
+
+
+
+
+
+
+

@@ -94,7 +94,7 @@ Very_best_Romberg # This presents a value over 120 which was the absoulut max.
 #EXERSICE 3 select()
 
 select(Pers_Data, shoesize, shoesize)
-ars = c(“name”, “shoesize”, “touch_floor”)
+ars <- c(Pers_Data$name, Pers_Data$shoesize, Pers_Data$touch_floor)
 
 #arrange your dataframe with gender and shoesize first
 
@@ -104,7 +104,19 @@ rearrange
 View(rearrange)
 
 
-#STOP AT MUTATE
+#EXERSICE 4, Mutate
+
+Words_per_sec <- mutate(Pers_Data, words_per_sec = 99/Pers_Data$tongue_twist)
+View(Words_per_sec)
+
+Pers_Data<-mutate(Pers_Data, Breath_min = Pers_Data$breath_hold%/%60)
+
+Pers_Data<-mutate(Pers_Data, Breath_sec=Pers_Data$breath_hold-Pers_Data$Breath_min*60)
+
+View(Pers_Data)
+
+#EXERCISE 5, summarasie
+
 
 
 

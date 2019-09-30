@@ -1,0 +1,19 @@
+---
+title: "My first markdown"
+author: "Anna Hedvig"
+date: "9/19/2019"
+output: html_document
+---
+
+Everything i write here is just text - R will not read it as code
+(for code, command + option + i )
+```{r}
+library(tidyverse)
+```
+
+Start text again, next chunck code
+
+```{r}
+
+```
+

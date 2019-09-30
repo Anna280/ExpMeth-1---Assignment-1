@@ -1,0 +1,108 @@
+---
+title: "Portfolio 1 — Experimental Methods 1 2019"
+author: "Fabio Trecca"
+date: "9/19/2019"
+output: html_document
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE, include = TRUE)
+library("tidyverse")
+library("ggplot2")
+```
+
+## Portfolio exam - Part 1
+
+#### Write a short data mining report on the CogSci Intro Week Personality Test Data in which you answer the following questions in prose, code and graphs:
+
+First of all, you have to import the personality data. If the dataset is in your working directory, then you can just load it into R. Otherwise you will have to change your working directory.
+
+```{r load_data}
+PD<-read.csv("~/Desktop/ExpMeth-1---Assignment-1/Personality_test/Pers_Data.csv",header = TRUE)
+```
+
+Once you are done loading the data, you can start working on the questions below.
+
+#### Question 1
+
+Who can hold their breath longer on average, those with right or left ocular dominance? Plot the data using ggplot2 to find out. The plots should include error bars (depicting the standard error of the means). Then use the mean() and sd() functions to find mean and standard deviation of the two eye dominance groups.
+
+
+```{r question1}
+Pers_Data_q1<-filter(Pers_Data, Pers_Data$ocular_dom=="Left" | Pers_Data$ocular_dom=="Right")
+
+ breath_hold<- ggplot(Pers_Data_q1, aes(x=ocular_dom, y=breath_hold, fill = ocular_dom))+
+  geom_bar(stat='summary', fun.y = mean, width = 0.5)+
+  geom_errorbar(stat = 'summary', fun.data = mean_se, width = 0.2)+
+  theme_minimal()
+ 
+breath_hold
+
+```
+
+```{r}
+  breath_hold <- Pers_Data_q1 %>%
+  group_by(ocular_dom) %>% 
+  
+   summarise(mean(breath_hold), sd(breath_hold))
+breath_hold
+```
+
+
+Explain your results in plain terms here: 
+
+the mean value for breath hold is higher for peope with right ocular dominance than the ones with left ocular dominance. The standard deviation is bigger for people with left ocular dominance which indicates the distribution is more spread out comparing to the one for tight ocular dominance.
+
+---
+
+#### Question 2
+
+Who likes silence vs. noise best? Males or females? Also in this case you should plot the data using ggplot2 (including error bars), then use the mean() and sd() functions to find mean and standard deviation of the two genders.
+
+```{r question2}
+
+```
+
+Explain your results in plain terms here: 
+
+---
+
+#### Question 3
+
+Are the breath_hold data normally distributed? Provide visual and numeric support for your answer.
+
+```{r question3}
+
+```
+
+
+Explain your results in plain terms here: 
+
+---
+
+#### Question 4
+
+Are the Balloon reaction time data (balloon and balloon_balance) normally distributed? Provide visual and numeric support for your answer.
+
+```{r question4}
+
+```
+
+
+Explain your results in plain terms here: 
+
+---
+
+#### Question 5
+
+Shoe size could tell us something about general body size, which could also be connected to one's ability to hold your breath. In other words we predict that there is a positive relation between shoe size and how long time CogSci students can hold their breath. Try plotting the two sets of data against each other using a scatter plot (hint: both variables are continuous variables). Bonus question: Males and females have different body sizes. Use grouping in your plot to distinguish the relationship between shoe size and holding breath for males and females.
+
+```{r question5}
+
+```
+
+
+Explain your results in plain terms here: 
+
+
+
